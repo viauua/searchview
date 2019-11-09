@@ -33,6 +33,7 @@
             android:layout_marginBottom="24dp"
             android:src="@drawable/ic_add_black_24dp"
             app:backgroundTint="@color/colorAccent"
+            android:visibility="invisible"
             app:fabSize="normal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

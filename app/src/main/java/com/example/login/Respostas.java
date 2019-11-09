@@ -34,6 +34,7 @@ public class Respostas extends AppCompatActivity {
     private DatabaseReference comentarioReference;
     ArrayList<Comentario> comentarios;
     ListView listComentario;
+    private DatabaseReference usuarioReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,10 @@ public class Respostas extends AppCompatActivity {
         btn_editar =  (Button) (findViewById(R.id.btn_editar));
         btn_enviar = (Button) (findViewById(R.id.btnEnviar));
         listComentario = (ListView) (findViewById(R.id.listViewComentarios));
+
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        usuarioReference = database.getReference("usuarios/"+  currentFirebaseUser.getUid());
+
 
         Intent intent = getIntent();
         id = (String) intent.getSerializableExtra("ID");
@@ -69,6 +74,26 @@ public class Respostas extends AppCompatActivity {
                 intent.putExtra("CATEGORIA", categoria);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        //verifica permissão
+        usuarioReference.child("admin").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Boolean isAdmin = dataSnapshot.getValue().toString() == "true";
+
+                if (isAdmin) {
+                    btn_editar.setVisibility(View.VISIBLE);
+                }else{
+                    btn_editar.setVisibility(View.GONE);
+                }
+
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Toast.makeText(getApplicationContext(), "Ocorreu um erro", Toast.LENGTH_LONG).show();
             }
         });
 

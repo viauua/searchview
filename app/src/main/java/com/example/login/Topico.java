@@ -6,7 +6,6 @@ public class Topico {
     private String resposta;
     private String id;
 
-
     public String getPergunta() {
         return pergunta;
     }

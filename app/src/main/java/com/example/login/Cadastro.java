@@ -15,8 +15,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Cadastro extends AppCompatActivity {
+
     private EditText edtEmail, edtSenha, edtConfirmarSenha;
 
     private Button btnCadastrar, btnVoltar;
@@ -25,11 +29,17 @@ public class Cadastro extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
+    private FirebaseDatabase database;
+    private DatabaseReference usuarioReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
+
+        database = FirebaseDatabase.getInstance();
+        usuarioReference= database.getReference("usuarios");
 
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
@@ -62,7 +72,7 @@ public class Cadastro extends AppCompatActivity {
 
     private void cadastrarUsuario() {
 
-        String email = edtEmail.getText().toString().trim();
+        final String email = edtEmail.getText().toString().trim();
         String senha = edtSenha.getText().toString().trim();
         String confirmarSenha = edtConfirmarSenha.getText().toString().trim();
 
@@ -87,16 +97,27 @@ public class Cadastro extends AppCompatActivity {
         firebaseAuth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+
                 progressDialog.dismiss();
+
                 if (task.isSuccessful()) {
+
+                    FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+                    Usuario usuario = new Usuario();
+                    usuario.setAdmin(false);
+                    usuario.setEmail(email);
+                    usuario.setId(currentFirebaseUser.getUid());
+
+                    usuarioReference.child(currentFirebaseUser.getUid()).setValue(usuario);
+
                     finish();
                     Toast.makeText(getApplicationContext(), "Cadastro efetuado com sucesso!", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(getApplicationContext(), Categorias.class);
                     startActivity(intent);
+
                 } else {
                     Toast.makeText(getApplicationContext(), "Ocorreu um erro ao criar a conta, tente novamente", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(getApplicationContext(), Login.class);
-                    startActivity(intent);
                 }
             }
         });

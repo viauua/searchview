@@ -3,6 +3,9 @@ package com.example.login;
 import com.google.firebase.auth.FirebaseAuth;
 
 public    class PersmissaoController {
+
+    FirebaseAuth mAuth;
+
     public  FirebaseAuth getmAuth() {
         return mAuth;
     }
@@ -10,8 +13,6 @@ public    class PersmissaoController {
     public void setmAuth(FirebaseAuth mAuth) {
         this.mAuth = mAuth;
     }
-
-    FirebaseAuth mAuth;;
 
     public  boolean usuarioTemPermissao(String s){
         //consulta no firebase
