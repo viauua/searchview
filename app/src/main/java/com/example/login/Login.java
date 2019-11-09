@@ -27,7 +27,6 @@ public class Login extends AppCompatActivity {
     private Button btnLogin, btnCadastro;
     private ProgressDialog progressDialog;
 
-    //    PersmissaoController persmissaoController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -45,11 +44,8 @@ public class Login extends AppCompatActivity {
         if (currentUser != null) {
             getUserInfo();
             abreActivity();
-//
-//            persmissaoController =new PersmissaoController();
-//            persmissaoController.setmAuth(mAuth);
         }
-//        if( persmissaoController.usuarioTemPermissao("usuario_cadastro"))
+
         btnCadastro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
