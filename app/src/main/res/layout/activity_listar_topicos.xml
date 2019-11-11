@@ -13,6 +13,15 @@
         android:background="@drawable/tela_5"
         android:orientation="vertical">
 
+        <SearchView
+            android:id="@+id/btnPesquisar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:iconifiedByDefault="false"
+            android:queryHint="Pesquisar"
+            android:visibility="visible"></SearchView>
+
+
         <ListView
             android:id="@+id/listTopicos"
             android:layout_width="391dp"

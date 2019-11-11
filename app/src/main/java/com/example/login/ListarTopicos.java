@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -32,6 +33,7 @@ public class ListarTopicos extends AppCompatActivity {
     ListView listTopicos;
     ArrayList<Topico> topicos;
     String categoria;
+    SearchView pesquisar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,25 @@ public class ListarTopicos extends AppCompatActivity {
             }
         });
 
+        pesqusiar = (SearchView)findViewById(R.id.btnPesquisar);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
+        listTopicos.setAdapter(adapter);
+
+        pesqusiar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+
+                adapter.getFilter().filter(s);
+
+                return false;
+            }
+        });
         listTopicos = (ListView) findViewById(R.id.listTopicos);
 
         topicos = new ArrayList<>();
