@@ -82,12 +82,12 @@ public class ListarTopicos extends AppCompatActivity {
             }
         });
 
-        pesqusiar = (SearchView)findViewById(R.id.btnPesquisar);
+        pesquisar = (SearchView)findViewById(R.id.btnPesquisar);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
         listTopicos.setAdapter(adapter);
 
-        pesqusiar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        pesquisar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 return false;

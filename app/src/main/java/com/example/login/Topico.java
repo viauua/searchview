@@ -2,9 +2,9 @@ package com.example.login;
 
 public class Topico {
 
-    private String pergunta;
-    private String resposta;
-    private String id;
+    public String pergunta;
+    public String resposta;
+    public String id;
 
     public String getPergunta() {
         return pergunta;
